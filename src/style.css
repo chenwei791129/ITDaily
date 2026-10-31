@@ -37,6 +37,7 @@ body { margin: 0 auto; max-width: 480px; background: #fff; min-height: 100vh; }
 .info div { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px dashed #999; }
 .info dt { flex: none; }
 .info dd { margin: 0; }
+#direction { word-break: keep-all; }
 
 h2 { font-size: 1rem; margin: 0; padding: 10px 16px; background: var(--band); }
 .yiji { list-style: none; margin: 0; padding: 0; }

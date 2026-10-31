@@ -89,7 +89,10 @@ export function getAlmanac(date: Date): Almanac {
     weekday: `星期${WEEKDAYS[solar.getWeek()]}`,
     lunarText: `農曆${lunar.getYearInGanZhi()}年 ${t(lunar.getMonthInChinese())}月${lunar.getDayInChinese()}`,
     fortune: ZHI_XING_FORTUNE[lunar.getZhiXing()],
-    itGodDirection: `座架鍵外${t(lunar.getDayPositionXiDesc())}`,
+    // 部署神 = 喜神, 乖乖神 = 福神; NBSP keeps each god and direction on one line.
+    itGodDirection: t(
+      `部署神\u00a0${lunar.getDayPositionXiDesc()}・乖乖神\u00a0${lunar.getDayPositionFuDesc()}`,
+    ),
     luckyHours,
     chong,
     sha: t(lunar.getDaySha()),

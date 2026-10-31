@@ -36,6 +36,11 @@ test('displayed text over 2020-2035 contains no Simplified-only chars', () => {
   }
 }, 30_000)
 
+test('IT gods map to 喜神 and 福神 directions', () => {
+  // 2026-05-10: 喜神 东北, 福神 正北.
+  expect(getAlmanac(new Date(2026, 4, 10)).itGodDirection).toBe('部署神\u00a0東北・乖乖神\u00a0正北')
+})
+
 test('chong lists both ages of the clashing ganzhi', () => {
   // 2026-05-10 clashes 戊寅; born 1998 and 1938 in lunar year 2026.
   expect(getAlmanac(new Date(2026, 4, 10)).chong).toBe('屬虎(戊寅，28歲)、屬虎(戊寅，88歲)')
