@@ -13,14 +13,33 @@ bun install
 bun run dev      # http://localhost:5173
 bun test
 bun run build    # outputs dist/
+bun run start    # serves dist/ on :8080 and posts the Slack card once
 ```
+
+## Slack card
+
+On every start, `src/server.ts` posts today's almanac as a Block Kit card to the
+incoming webhook in `SLACK_WEBHOOK_URL` (skipped when unset; failures are only logged).
+Locally, put it in `.env` (git-ignored); Bun loads it automatically.
 
 ## Container
 
-Static files served by `nginx-unprivileged` on port **8080** (plain HTTP, non-root);
-TLS is expected to be terminated by the upstream load balancer.
+A Bun server (`src/server.ts`) serves the built site and `/healthz` on port **8080**
+(plain HTTP, UID 1000, `TZ=Asia/Taipei`); TLS is terminated by the upstream load balancer.
 
 ```sh
 docker build -t it-daily .
-docker run --rm -p 8080:8080 it-daily
+docker run --rm -p 8080:8080 --env-file .env it-daily
+```
+
+Build with `--platform linux/amd64` when the cluster runs amd64 and you build on Apple Silicon.
+
+## Kubernetes
+
+`k8s/deployment.yaml` defines a Deployment and a ClusterIP Service (Ingress not included).
+Keep `replicas: 1`: each pod start posts one Slack card.
+
+```sh
+kubectl create secret generic it-daily-slack --from-literal=webhook-url='https://hooks.slack.com/services/...'
+kubectl apply -f k8s/deployment.yaml   # set the image to your registry first
 ```
