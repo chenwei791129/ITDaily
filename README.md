@@ -10,7 +10,7 @@ result on the same day.
 
 ```sh
 bun install
-bun run dev      # http://localhost:5173
+bun run dev      # http://localhost:5173 (proxies /api to :8080; run `SLACK_WEBHOOK_URL= bun run start` alongside to skip the Slack post)
 bun test
 bun run build    # outputs dist/
 bun run start    # serves dist/ on :8080 and posts the Slack card once
@@ -21,6 +21,14 @@ bun run start    # serves dist/ on :8080 and posts the Slack card once
 On every start, `src/server.ts` posts today's almanac as a Block Kit card to the
 incoming webhook in `SLACK_WEBHOOK_URL` (skipped when unset; failures are only logged).
 Locally, put it in `.env` (git-ignored); Bun loads it automatically.
+
+## IT新消息
+
+`GET /api/news` returns up to 3 of today's newest items (server-local date; the container sets
+`TZ=Asia/Taipei` to match iThome's timestamps) from the
+[iThome security RSS](https://www.ithome.com.tw/rss/security). The feed is cached in
+memory for 30 minutes; on fetch failure the last good copy is kept. The same items are
+appended to the Slack card.
 
 ## Container
 
