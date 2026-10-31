@@ -8,6 +8,8 @@ result on the same day.
 
 ## Development
 
+Run `make` to list common tasks (install, dev, start, test, docker-build, ...).
+
 ```sh
 bun install
 bun run dev      # http://localhost:5173 (proxies /api to :8080; run `SLACK_WEBHOOK_URL= bun run start` alongside to skip the Slack post)
