@@ -1,0 +1,50 @@
+:root {
+  --accent: #0068a8;
+  --danger: #c00;
+  --bg: #f7f7f7;
+  --band: #e4e4e4;
+  font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  color: #222;
+  background: var(--bg);
+}
+
+body { margin: 0 auto; max-width: 480px; background: #fff; min-height: 100vh; }
+.accent { color: var(--accent); }
+.danger { color: var(--danger); }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; background: var(--band); position: sticky; top: 0;
+}
+.topbar h1 { font-size: 1.15rem; margin: 0; }
+.topbar button, #today {
+  border: 0; border-radius: 999px; background: #666; color: #fff; cursor: pointer;
+}
+.topbar button { width: 40px; height: 40px; font-size: 1.6rem; line-height: 1; }
+#today { padding: 4px 14px; margin-top: 8px; background: var(--accent); }
+
+.date { text-align: center; padding: 16px 20px 8px; }
+.date-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 1.1rem; }
+.date-head b { font-size: 2rem; font-weight: 400; }
+#weekday { font-size: 2rem; flex: 1; }
+.day { font-size: 7rem; line-height: 1.1; font-weight: 300; }
+.lunar { color: #444; }
+
+.fortune { display: flex; align-items: center; gap: 12px; padding: 12px 24px; font-size: 1.15rem; }
+.fortune p { margin: 0; }
+
+.info { background: var(--band); margin: 0; padding: 4px 12px; font-size: 1.1rem; }
+.info div { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px dashed #999; }
+.info dt { flex: none; }
+.info dd { margin: 0; }
+
+h2 { font-size: 1rem; margin: 0; padding: 10px 16px; background: var(--band); }
+.yiji { list-style: none; margin: 0; padding: 0; }
+.yiji li { display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #ddd; line-height: 1.6; font-size: 1.1rem; }
+.badge {
+  flex: none; display: inline-grid; place-items: center; width: 1.8em; height: 1.8em;
+  border: 2px solid currentColor; border-radius: 50%;
+}
+.badge.yi { color: var(--accent); }
+.badge.ji { color: var(--danger); }
+.placeholder { margin: 0; padding: 14px 16px; color: #767676; }

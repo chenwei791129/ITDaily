@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IT人的今天</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <button id="prev" type="button" aria-label="前一天">‹</button>
+      <h1>IT人的今天</h1>
+      <button id="next" type="button" aria-label="後一天">›</button>
+    </header>
+
+    <main>
+      <section class="date" aria-live="polite" aria-atomic="true">
+        <div class="date-head">
+          <span><b id="month"></b> 月</span>
+          <span id="weekday" class="accent"></span>
+        </div>
+        <div id="day" class="day accent"></div>
+        <div id="lunar" class="lunar"></div>
+        <button id="today" type="button" hidden>回今天</button>
+      </section>
+
+      <section class="fortune">
+        <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+          <g fill="none" stroke="#666" stroke-width="3" stroke-linecap="round">
+            <path d="M27 6v16M32 4v18M37 6v16" />
+            <path d="M8 26h48M12 26c0 16 8 24 20 24s20-8 20-24" />
+            <path d="M6 30c-2 0-2 6 4 6M58 30c2 0 2 6-4 6M20 48l-4 10M44 48l4 10" />
+          </g>
+          <text x="32" y="43" text-anchor="middle" font-size="12" fill="#666">爐</text>
+        </svg>
+        <p id="fortune"></p>
+      </section>
+
+      <dl class="info">
+        <div><dt class="accent">IT神方位</dt><dd id="direction"></dd></div>
+        <div><dt class="accent">吉時</dt><dd id="hours"></dd></div>
+        <div><dt class="accent">沖</dt><dd id="chong"></dd></div>
+        <div><dt class="danger">煞</dt><dd id="sha"></dd></div>
+      </dl>
+
+      <h2>IT宅民曆</h2>
+      <ul class="yiji">
+        <li><span class="badge yi">宜</span><span id="yi"></span></li>
+        <li><span class="badge ji">忌</span><span id="ji"></span></li>
+      </ul>
+
+      <h2>今日備忘錄</h2>
+      <p class="placeholder">今天沒有備忘記事</p>
+
+      <h2>IT新消息</h2>
+      <p class="placeholder">暫無新消息</p>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
