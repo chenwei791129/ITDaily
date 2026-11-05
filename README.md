@@ -1,6 +1,4 @@
-<img src="icon.png" alt="" width="96" align="right" />
-
-# IT Daily (IT人的今天)
+# <img src="icon.png" alt="" width="32" /> IT Daily (IT人的今天)
 
 An IT-flavoured farmer's almanac. Each day's 宜/忌 come from the real lunar almanac
 (via [`lunar-typescript`](https://github.com/6tail/lunar-typescript)) and are translated
