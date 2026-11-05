@@ -1,0 +1,19 @@
+# Changelog
+
+## 1.0.0 (2026-11-05)
+
+
+### Features
+
+* add IT almanac web app with lunar-based yi/ji mapping ([3124d06](https://github.com/chenwei791129/ITDaily/commit/3124d067255c2d5a081c52798d13e659cc65e9e8))
+* remove Slack notification ([230810d](https://github.com/chenwei791129/ITDaily/commit/230810d12d2282b90ec852c3af9282726e53c03e))
+* serve site via Bun and post Slack card on start ([98ebea8](https://github.com/chenwei791129/ITDaily/commit/98ebea885afccac920506f039c3190fa8a7f55a6))
+* show iThome security news from the last 24 hours ([6462ec0](https://github.com/chenwei791129/ITDaily/commit/6462ec093fd5b6fac54df1921439de11b973a7d9))
+* show today's iThome security news on page and Slack card ([74c831a](https://github.com/chenwei791129/ITDaily/commit/74c831a9b975e3e179c6ec90c51981011dc95d36))
+* show 部署神 and 乖乖神 directions in IT god field ([9b0c996](https://github.com/chenwei791129/ITDaily/commit/9b0c996cd00b87afc39082c5f1cc1353cf3cdb37))
+* **web:** add a date picker, app icons and centre the weekday ([41c735a](https://github.com/chenwei791129/ITDaily/commit/41c735a3c9929717aae53b7748b3d68782c104fb))
+
+
+### Continuous Integration
+
+* build image to ghcr and release with release-please ([3d9028e](https://github.com/chenwei791129/ITDaily/commit/3d9028ede651ccf616229e6791e20cd23e8606c8))
