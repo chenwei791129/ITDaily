@@ -50,14 +50,4 @@ docker build -t it-daily .
 docker run --rm -p 8080:8080 --env-file .env it-daily
 ```
 
-Build with `--platform linux/amd64` when the cluster runs amd64 and you build on Apple Silicon.
-
-## Kubernetes
-
-`k8s/deployment.yaml` defines a Deployment and a ClusterIP Service (Ingress not included).
-Keep `replicas: 1`: each pod start posts one Slack card.
-
-```sh
-kubectl create secret generic it-daily-slack --from-literal=webhook-url='https://hooks.slack.com/services/...'
-kubectl apply -f k8s/deployment.yaml   # set the image to your registry first
-```
+Build with `--platform linux/amd64` when the target host runs amd64 and you build on Apple Silicon.
