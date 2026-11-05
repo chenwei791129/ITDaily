@@ -17,27 +17,3 @@ bun test
 bun run build    # outputs dist/
 bun run start    # serves dist/ and /api on :8080
 ```
-
-## IT新消息
-
-`GET /api/news` returns up to 3 of the newest items published in the last 24 hours from the
-[iThome security RSS](https://www.ithome.com.tw/rss/security) (its timestamps are read as
-Taiwan time). The feed is cached in memory for 30 minutes and re-filtered on each request;
-on fetch failure the last good copy is kept.
-
-## Web
-
-Use ‹ › to step one day, or the calendar icon in the top-left to pick any date
-(1900–2100); 回今天 jumps back to today. News always shows the latest items.
-
-## Container
-
-A Bun server (`src/server.ts`) serves the built site and `/healthz` on port **8080**
-(plain HTTP, UID 1000, `TZ=Asia/Taipei`); TLS is terminated by the upstream load balancer.
-
-```sh
-docker build -t it-daily .
-docker run --rm -p 8080:8080 --env-file .env it-daily
-```
-
-Build with `--platform linux/amd64` when the target host runs amd64 and you build on Apple Silicon.
