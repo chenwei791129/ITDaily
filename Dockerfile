@@ -1,4 +1,6 @@
-FROM oven/bun:1-alpine AS build
+# dist/ is platform-independent, so test and build natively instead of under
+# QEMU for every target platform (emulated arm64 is ~50x slower).
+FROM --platform=$BUILDPLATFORM oven/bun:1-alpine AS build
 WORKDIR /app
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
