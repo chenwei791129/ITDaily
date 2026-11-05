@@ -5,7 +5,7 @@ RUN bun install --frozen-lockfile
 COPY . .
 RUN bun test && bun run build
 
-# Bun server: serves dist/ and posts the Slack card on start. TLS is terminated upstream.
+# Bun server: serves dist/ and /api. TLS is terminated upstream.
 FROM oven/bun:1-alpine
 WORKDIR /app
 # NODE_ENV=production also turns off Bun.serve's detailed error pages.

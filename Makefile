@@ -7,7 +7,7 @@ PORT ?= 8080
 CONTAINER ?= $(shell command -v docker >/dev/null 2>&1 && echo docker || echo podman)
 ENV_FILE := $(addprefix --env-file ,$(wildcard .env))
 
-.PHONY: help install dev start start-slack test build check docker-build docker-run clean
+.PHONY: help install dev start test build check docker-build docker-run clean
 
 help: ## Show this help
 	@printf '\033[1mUsage:\033[0m make \033[36m<target>\033[0m\n\n\033[1mTargets:\033[0m\n'
@@ -20,10 +20,7 @@ install: ## Install dependencies
 dev: ## Run the Vite dev server (run `make start` alongside for /api)
 	bun run dev
 
-start: build ## Build and serve on PORT without posting to Slack
-	SLACK_WEBHOOK_URL='' PORT=$(PORT) bun run start
-
-start-slack: build ## Build and serve on PORT, posting the Slack card from .env
+start: build ## Build and serve on PORT
 	PORT=$(PORT) bun run start
 
 test: ## Run tests

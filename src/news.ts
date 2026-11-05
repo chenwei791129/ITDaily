@@ -33,7 +33,7 @@ const tag = (xml: string, name: string) => decode(xml.match(new RegExp(`<${name}
 const parsePubDate = (s: string) => Date.parse(`${s.trim().replace(/\s+/, 'T')}+08:00`)
 
 // Only the fields we need from iThome's RSS 2.0 feed; non-iThome or odd-looking links are dropped
-// (whitespace, <, >, | would break Slack's <url|text> syntax).
+// (whitespace, <, >, |, " are rejected as malformed).
 export function parseFeed(xml: string): FeedItem[] {
   return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)]
     .map(([, item]) => ({

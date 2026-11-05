@@ -12,26 +12,18 @@ Run `make` to list common tasks (install, dev, start, test, docker-build, ...).
 
 ```sh
 bun install
-bun run dev      # http://localhost:5173 (proxies /api to :8080; run `SLACK_WEBHOOK_URL= bun run start` alongside to skip the Slack post)
+bun run dev      # http://localhost:5173 (proxies /api to :8080; run `bun run start` alongside)
 bun test
 bun run build    # outputs dist/
-bun run start    # serves dist/ on :8080 and posts the Slack card once
+bun run start    # serves dist/ and /api on :8080
 ```
-
-## Slack card
-
-On every start, `src/server.ts` posts today's almanac as a Block Kit card to the
-incoming webhook in `SLACK_WEBHOOK_URL` (skipped when unset; failures are only logged).
-Locally, put it in `.env` (git-ignored); Bun loads it automatically.
-
-For the Slack app's icon, upload [icon.png](icon.png) (1024×1024).
 
 ## IT新消息
 
 `GET /api/news` returns up to 3 of the newest items published in the last 24 hours from the
 [iThome security RSS](https://www.ithome.com.tw/rss/security) (its timestamps are read as
 Taiwan time). The feed is cached in memory for 30 minutes and re-filtered on each request;
-on fetch failure the last good copy is kept. The same items are appended to the Slack card.
+on fetch failure the last good copy is kept.
 
 ## Web
 
