@@ -1,3 +1,5 @@
+<img src="icon.png" alt="" width="96" align="right" />
+
 # IT Daily (IT人的今天)
 
 An IT-flavoured farmer's almanac. Each day's 宜/忌 come from the real lunar almanac
@@ -24,7 +26,7 @@ On every start, `src/server.ts` posts today's almanac as a Block Kit card to the
 incoming webhook in `SLACK_WEBHOOK_URL` (skipped when unset; failures are only logged).
 Locally, put it in `.env` (git-ignored); Bun loads it automatically.
 
-For the Slack app's icon, upload [docs/slack-icon.png](docs/slack-icon.png) (1024×1024).
+For the Slack app's icon, upload [icon.png](icon.png) (1024×1024).
 
 ## IT新消息
 
