@@ -3,6 +3,7 @@ import { getAlmanac } from './almanac'
 import type { NewsItem } from './news'
 
 const $ = (id: string) => document.getElementById(id)!
+const pad = (n: number) => String(n).padStart(2, '0')
 const isSameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString()
 
 let current = new Date()
@@ -41,6 +42,7 @@ function render() {
   $('yi').textContent = a.yi.join('、') || '—'
   $('ji').textContent = a.ji.join('、') || '—'
   $('today').hidden = isSameDay(current, new Date())
+  pick.value = `${current.getFullYear()}-${pad(current.getMonth() + 1)}-${pad(current.getDate())}`
 }
 
 function shift(days: number) {
@@ -49,6 +51,14 @@ function shift(days: number) {
 }
 
 $('prev').addEventListener('click', () => shift(-1))
+const pick = $('pick') as HTMLInputElement
+$('pick-open').addEventListener('click', () => pick.showPicker())
+pick.addEventListener('change', () => {
+  const [y, m, d] = pick.value.split('-').map(Number)
+  if (!pick.validity.valid || !y) return // cleared or out of min/max
+  current = new Date(y, m - 1, d)
+  render()
+})
 $('next').addEventListener('click', () => shift(1))
 $('today').addEventListener('click', () => {
   current = new Date()

@@ -24,12 +24,19 @@ On every start, `src/server.ts` posts today's almanac as a Block Kit card to the
 incoming webhook in `SLACK_WEBHOOK_URL` (skipped when unset; failures are only logged).
 Locally, put it in `.env` (git-ignored); Bun loads it automatically.
 
+For the Slack app's icon, upload [docs/slack-icon.png](docs/slack-icon.png) (1024×1024).
+
 ## IT新消息
 
 `GET /api/news` returns up to 3 of the newest items published in the last 24 hours from the
 [iThome security RSS](https://www.ithome.com.tw/rss/security) (its timestamps are read as
 Taiwan time). The feed is cached in memory for 30 minutes and re-filtered on each request;
 on fetch failure the last good copy is kept. The same items are appended to the Slack card.
+
+## Web
+
+Use ‹ › to step one day, or the calendar icon in the top-left to pick any date
+(1900–2100); 回今天 jumps back to today. News always shows the latest items.
 
 ## Container
 
