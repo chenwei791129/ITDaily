@@ -1,6 +1,6 @@
 # <img src="icon.png" alt="" width="32" /> IT Daily（IT人的今天）
 
-給 IT 人的農民曆。
+給 IT 人的農民曆：https://itdaily.awei.one
 
 向 iThome 的 [IT人的今天-IT宅民曆](https://today.ithome.com.tw/) 致敬。
 
@@ -43,7 +43,7 @@
 
 ## 自行架設
 
-每次發布都會推送容器映像到 GitHub Container Registry（支援 amd64 與 arm64）：
+每次發布都會推送容器映像到 GitHub Container Registry（linux/amd64）：
 
 ```sh
 docker run --rm -p 8080:8080 ghcr.io/chenwei791129/it-daily:latest

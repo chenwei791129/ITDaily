@@ -58,7 +58,6 @@ export function pickRecent(items: FeedItem[], now: Date): NewsItem[] {
 // Whole feed cached in memory and re-filtered per request, so items age out without refetching.
 let cached: FeedItem[] = []
 let fetchedAt = -Infinity
-let inflight: Promise<void> | undefined
 
 async function refresh(now: Date) {
   try {
@@ -76,8 +75,8 @@ async function refresh(now: Date) {
 }
 
 export async function getRecentNews(now = new Date()): Promise<NewsItem[]> {
-  if (now.getTime() - fetchedAt >= CACHE_MS) {
-    await (inflight ??= refresh(now).finally(() => (inflight = undefined)))
-  }
+  // No shared in-flight promise: on Workers a fetch tied to another request can be
+  // cancelled with it. Concurrent misses just fetch the feed more than once.
+  if (now.getTime() - fetchedAt >= CACHE_MS) await refresh(now)
   return pickRecent(cached, now)
 }

@@ -2,7 +2,8 @@ name: Release Please
 
 # Opens and maintains the release PR (version bump + CHANGELOG.md) from
 # Conventional Commits on main. Merging it tags vX.Y.Z, creates the GitHub
-# release and publishes the image; only releases publish images.
+# release, publishes the image and deploys to Cloudflare Workers; only
+# releases publish or deploy.
 on:
   push:
     branches:
@@ -27,6 +28,7 @@ jobs:
     uses: chenwei791129/.github/.github/workflows/build-and-push-image.yml@main
     with:
       image-name: chenwei791129/it-daily
+      platforms: linux/amd64
       enable-branch-tag: false
       enable-latest-tag: false
       enable-semver-tags: false
@@ -39,3 +41,38 @@ jobs:
         type=semver,pattern={{major}},value=${{ needs.release-please.outputs.tag_name }}
         type=raw,value=latest
       # yamllint enable rule:line-length
+
+  # Serves the site at itdaily.awei.one (wrangler.jsonc) on the Workers free
+  # plan: static assets are free; only /api/* and /healthz run the Worker.
+  deploy:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+    concurrency:
+      group: cloudflare-deploy
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.release-please.outputs.tag_name }}
+          persist-credentials: false
+
+      # v2.2.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+      # Wrangler runs on Node (>= 22), not on the runner image default.
+      # v7.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+
+      - run: bun install --frozen-lockfile
+      - run: bun test
+      - run: bun run build
+
+      - name: Deploy to Cloudflare Workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bunx wrangler deploy

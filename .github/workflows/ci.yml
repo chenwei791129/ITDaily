@@ -16,6 +16,27 @@ jobs:
     uses: chenwei791129/.github/.github/workflows/build-and-push-image.yml@main
     with:
       image-name: chenwei791129/it-daily
+      platforms: linux/amd64
       enable-branch-tag: false
       enable-latest-tag: false
       enable-semver-tags: false
+
+  # Bundles the Cloudflare Worker without deploying, so a broken wrangler.jsonc
+  # or src/worker.ts fails here instead of after a release is tagged.
+  worker:
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # v2.2.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+      # v7.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - run: bunx wrangler deploy --dry-run
