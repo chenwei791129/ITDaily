@@ -9,7 +9,7 @@ const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').rep
 export function buildSlackMessage(a: Almanac, news: NewsItem[]) {
   const newsText = news.length
     ? news.map((n) => `• <${n.link}|${escape(n.title)}>`).join('\n')
-    : '今天沒有新消息'
+    : '最近 24 小時沒有新消息'
   const yi = a.yi.join('、') || '—'
   const ji = a.ji.join('、') || '—'
   return {

@@ -26,11 +26,10 @@ Locally, put it in `.env` (git-ignored); Bun loads it automatically.
 
 ## IT新消息
 
-`GET /api/news` returns up to 3 of today's newest items (server-local date; the container sets
-`TZ=Asia/Taipei` to match iThome's timestamps) from the
-[iThome security RSS](https://www.ithome.com.tw/rss/security). The feed is cached in
-memory for 30 minutes; on fetch failure the last good copy is kept. The same items are
-appended to the Slack card.
+`GET /api/news` returns up to 3 of the newest items published in the last 24 hours from the
+[iThome security RSS](https://www.ithome.com.tw/rss/security) (its timestamps are read as
+Taiwan time). The feed is cached in memory for 30 minutes and re-filtered on each request;
+on fetch failure the last good copy is kept. The same items are appended to the Slack card.
 
 ## Container
 

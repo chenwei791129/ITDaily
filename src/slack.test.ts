@@ -18,7 +18,7 @@ test('news section links escaped titles, or says there is none', () => {
   const a = getAlmanac(new Date(2015, 1, 10))
   const newsText = (n: typeof news) => JSON.stringify(buildSlackMessage(a, n).blocks.at(-1))
   expect(newsText(news)).toContain('<https://www.ithome.com.tw/news/1|A&amp;B &lt;修補&gt; 漏洞>')
-  expect(newsText([])).toContain('今天沒有新消息')
+  expect(newsText([])).toContain('最近 24 小時沒有新消息')
 })
 
 test('posts the card and fails on non-2xx responses', async () => {

@@ -7,10 +7,10 @@ const isSameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString()
 
 let current = new Date()
 
-// News is today's feed, independent of the date being viewed.
+// News is the last 24 hours of the feed, independent of the date being viewed.
 async function loadNews() {
   let news: NewsItem[] = []
-  let empty = '今天沒有新消息'
+  let empty = '最近 24 小時沒有新消息'
   try {
     const res = await fetch('/api/news')
     if (!res.ok) throw new Error(String(res.status))

@@ -1,6 +1,8 @@
 const FEED_URL = 'https://www.ithome.com.tw/rss/security'
 const LINK_PREFIX = 'https://www.ithome.com.tw/'
 const CACHE_MS = 30 * 60_000
+const WINDOW_MS = 24 * 60 * 60_000
+const CLOCK_SKEW_MS = 5 * 60_000 // tolerate items stamped slightly ahead of our clock
 const LIMIT = 3
 
 export interface NewsItem {
@@ -9,7 +11,7 @@ export interface NewsItem {
 }
 
 interface FeedItem extends NewsItem {
-  published: string // 'YYYY-MM-DD HH:MM[:SS]', Taiwan local time
+  published: number // epoch ms; NaN when pubDate is unparseable
 }
 
 const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" }
@@ -27,6 +29,9 @@ function decode(s: string): string {
 
 const tag = (xml: string, name: string) => decode(xml.match(new RegExp(`<${name}>([\\s\\S]*?)</${name}>`))?.[1] ?? '')
 
+// iThome uses a non-RFC 'YYYY-MM-DD HH:MM[:SS]' (sometimes with two spaces) in Taiwan time.
+const parsePubDate = (s: string) => Date.parse(`${s.trim().replace(/\s+/, 'T')}+08:00`)
+
 // Only the fields we need from iThome's RSS 2.0 feed; non-iThome or odd-looking links are dropped
 // (whitespace, <, >, | would break Slack's <url|text> syntax).
 export function parseFeed(xml: string): FeedItem[] {
@@ -34,24 +39,23 @@ export function parseFeed(xml: string): FeedItem[] {
     .map(([, item]) => ({
       title: tag(item, 'title'),
       link: tag(item, 'link'),
-      published: tag(item, 'pubDate').replace(/\s+/g, ' '),
+      published: parsePubDate(tag(item, 'pubDate')),
     }))
     .filter((i) => i.title && i.link.startsWith(LINK_PREFIX) && !/[\s<>|"]/.test(i.link))
 }
 
-const localDate = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-
-export function pickToday(items: FeedItem[], now: Date): NewsItem[] {
-  const today = localDate(now)
+export function pickRecent(items: FeedItem[], now: Date): NewsItem[] {
   return items
-    .filter((i) => i.published.startsWith(today))
-    .sort((a, b) => b.published.localeCompare(a.published))
+    .filter((i) => {
+      const age = now.getTime() - i.published
+      return age >= -CLOCK_SKEW_MS && age < WINDOW_MS
+    })
+    .sort((a, b) => b.published - a.published)
     .slice(0, LIMIT)
     .map(({ title, link }) => ({ title, link }))
 }
 
-// Whole feed cached in memory, so crossing midnight re-filters without refetching.
+// Whole feed cached in memory and re-filtered per request, so items age out without refetching.
 let cached: FeedItem[] = []
 let fetchedAt = -Infinity
 let inflight: Promise<void> | undefined
@@ -71,9 +75,9 @@ async function refresh(now: Date) {
   }
 }
 
-export async function getTodayNews(now = new Date()): Promise<NewsItem[]> {
+export async function getRecentNews(now = new Date()): Promise<NewsItem[]> {
   if (now.getTime() - fetchedAt >= CACHE_MS) {
     await (inflight ??= refresh(now).finally(() => (inflight = undefined)))
   }
-  return pickToday(cached, now)
+  return pickRecent(cached, now)
 }

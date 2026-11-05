@@ -1,6 +1,6 @@
 import { resolve, sep } from 'node:path'
 import { getAlmanac } from './almanac'
-import { getTodayNews } from './news'
+import { getRecentNews } from './news'
 import { sendToSlack } from './slack'
 
 const root = resolve('dist')
@@ -11,7 +11,7 @@ const server = Bun.serve({
   async fetch(req) {
     const { pathname } = new URL(req.url)
     if (pathname === '/healthz') return new Response('ok')
-    if (pathname === '/api/news') return Response.json(await getTodayNews())
+    if (pathname === '/api/news') return Response.json(await getRecentNews())
 
     let decoded: string
     try {
@@ -38,7 +38,7 @@ process.on('SIGTERM', () => server.stop().then(() => process.exit(0)))
 const webhook = process.env.SLACK_WEBHOOK_URL
 if (webhook) {
   const now = new Date()
-  getTodayNews(now)
+  getRecentNews(now)
     .then((news) => sendToSlack(webhook, getAlmanac(now), news))
     .then(() => console.log('Slack card sent'))
     // Log the message only: fetch errors may carry the request URL, which is the webhook secret.
