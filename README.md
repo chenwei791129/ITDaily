@@ -44,3 +44,7 @@
 ## 開發
 
 請參閱 [AGENTS.md](AGENTS.md)。
+
+## 授權
+
+[MIT](LICENSE)
