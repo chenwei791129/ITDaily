@@ -6,6 +6,8 @@ into IT activities through the table in `src/yiji.ts`. When a term has several I
 equivalents, one is picked deterministically from the date, so everyone sees the same
 result on the same day.
 
+<img src="docs/screenshot.png" alt="IT Daily screenshot" width="360" />
+
 ## Development
 
 Run `make` to list common tasks (install, dev, start, test, docker-build, ...).
