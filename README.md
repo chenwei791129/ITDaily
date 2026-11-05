@@ -2,7 +2,7 @@
 
 給 IT 人的農民曆。
 
-向 iThome 的 [IT人的今天](https://today.ithome.com.tw/) 致敬。
+向 iThome 的 [IT人的今天-IT宅民曆](https://today.ithome.com.tw/) 致敬。
 
 <img src="docs/screenshot.png" alt="IT Daily 畫面截圖" width="360" />
 
