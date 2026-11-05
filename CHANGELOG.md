@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/chenwei791129/ITDaily/compare/v1.0.0...v1.1.0) (2026-11-05)
+
+
+### Features
+
+* deploy to Cloudflare Workers at itdaily.awei.one ([85b7639](https://github.com/chenwei791129/ITDaily/commit/85b76391835fbff27fe7a70f2946b6cca9bb7516))
+
+
+### Bug Fixes
+
+* **docker:** run tests and build on the build platform ([336e830](https://github.com/chenwei791129/ITDaily/commit/336e830e0d0d5e0e384c6a86f8bc6924bb851fb6))
+
 ## 1.0.0 (2026-11-05)
 
 
