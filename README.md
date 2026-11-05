@@ -41,6 +41,16 @@
 
 完整宜忌對照表見 [`src/yiji.ts`](src/yiji.ts)；神明方位、每日運勢及其他欄位的產生邏輯見 [`src/almanac.ts`](src/almanac.ts)。
 
+## 自行架設
+
+每次發布都會推送容器映像到 GitHub Container Registry（支援 amd64 與 arm64）：
+
+```sh
+docker run --rm -p 8080:8080 ghcr.io/chenwei791129/it-daily:latest
+```
+
+啟動後開啟 http://localhost:8080 。
+
 ## 開發
 
 請參閱 [AGENTS.md](AGENTS.md)。

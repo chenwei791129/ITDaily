@@ -1,0 +1,41 @@
+name: Release Please
+
+# Opens and maintains the release PR (version bump + CHANGELOG.md) from
+# Conventional Commits on main. Merging it tags vX.Y.Z, creates the GitHub
+# release and publishes the image; only releases publish images.
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    uses: chenwei791129/.github/.github/workflows/release-please.yml@main
+    with:
+      release-type: node
+
+  image:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    permissions:
+      contents: read
+      packages: write
+    uses: chenwei791129/.github/.github/workflows/build-and-push-image.yml@main
+    with:
+      image-name: chenwei791129/it-daily
+      enable-branch-tag: false
+      enable-latest-tag: false
+      enable-semver-tags: false
+      # X.Y.Z, X.Y, X and latest for the release. Each rule must stay on one
+      # line, so the length limit is lifted here.
+      # yamllint disable rule:line-length
+      additional-tags: |
+        type=semver,pattern={{version}},value=${{ needs.release-please.outputs.tag_name }}
+        type=semver,pattern={{major}}.{{minor}},value=${{ needs.release-please.outputs.tag_name }}
+        type=semver,pattern={{major}},value=${{ needs.release-please.outputs.tag_name }}
+        type=raw,value=latest
+      # yamllint enable rule:line-length
