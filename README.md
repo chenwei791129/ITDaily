@@ -1,5 +1,8 @@
 # <img src="icon.png" alt="" width="32" /> IT Daily（IT人的今天）
 
+[![CI](https://github.com/chenwei791129/ITDaily/actions/workflows/ci.yml/badge.svg)](https://github.com/chenwei791129/ITDaily/actions/workflows/ci.yml)
+[![Release Please](https://github.com/chenwei791129/ITDaily/actions/workflows/release-please.yml/badge.svg?branch=main)](https://github.com/chenwei791129/ITDaily/actions/workflows/release-please.yml)
+
 給 IT 人的農民曆：https://itdaily.awei.one
 
 向 iThome 的 [IT人的今天-IT宅民曆](https://today.ithome.com.tw/) 致敬。
