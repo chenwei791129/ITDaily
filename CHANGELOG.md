@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/chenwei791129/ITDaily/compare/v1.3.0...v1.4.0) (2026-11-07)
+
+
+### Features
+
+* add user-selectable themes ([9ebca5d](https://github.com/chenwei791129/ITDaily/commit/9ebca5de6e3d1ad0cb04158e4c4485de1344632f)), closes [#5](https://github.com/chenwei791129/ITDaily/issues/5)
+
 ## [1.3.0](https://github.com/chenwei791129/ITDaily/compare/v1.2.0...v1.3.0) (2026-11-07)
 
 
