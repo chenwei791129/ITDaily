@@ -41,8 +41,22 @@ function render() {
   $('sha').textContent = a.sha
   $('yi').textContent = a.yi.join('、') || '—'
   $('ji').textContent = a.ji.join('、') || '—'
-  $('today').hidden = isSameDay(current, new Date())
+  const isToday = isSameDay(current, new Date())
+  $('today').hidden = isToday
   pick.value = `${current.getFullYear()}-${pad(current.getMonth() + 1)}-${pad(current.getDate())}`
+  // Shareable URL; replaceState so stepping through days doesn't flood the history.
+  const params = new URLSearchParams(location.search)
+  if (isToday) params.delete('date')
+  else params.set('date', pick.value)
+  const query = params.size ? `?${params}` : ''
+  history.replaceState(null, '', `${location.pathname}${query}${location.hash}`)
+}
+
+// The date input doubles as the validator: bad formats/dates clear it, min/max flag it invalid.
+function pickedDate(): Date | undefined {
+  const [y, m, d] = pick.value.split('-').map(Number)
+  if (!pick.validity.valid || !y) return // cleared or out of min/max
+  return new Date(y, m - 1, d)
 }
 
 function shift(days: number) {
@@ -54,9 +68,9 @@ $('prev').addEventListener('click', () => shift(-1))
 const pick = $('pick') as HTMLInputElement
 $('pick-open').addEventListener('click', () => pick.showPicker())
 pick.addEventListener('change', () => {
-  const [y, m, d] = pick.value.split('-').map(Number)
-  if (!pick.validity.valid || !y) return // cleared or out of min/max
-  current = new Date(y, m - 1, d)
+  const d = pickedDate()
+  if (!d) return
+  current = d
   render()
 })
 $('next').addEventListener('click', () => shift(1))
@@ -66,5 +80,7 @@ $('today').addEventListener('click', () => {
   $('prev').focus() // the button just hid itself; keep keyboard focus on the page
 })
 
+pick.value = new URLSearchParams(location.search).get('date') ?? ''
+current = pickedDate() ?? current
 render()
 loadNews()
