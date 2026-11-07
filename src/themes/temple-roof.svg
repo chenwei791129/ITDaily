@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 80" preserveAspectRatio="none">
+  <!-- 三川殿 roofline: a raised central hall between two lower wings, orange barrel tiles,
+       swallowtail ridges with 剪黏 figurines, gold dragons guarding a pagoda, painted beam below. -->
+  <defs>
+    <pattern id="tile" width="6" height="80" patternUnits="userSpaceOnUse">
+      <rect width="6" height="80" fill="#ea6a2e" /><rect width="1.6" height="80" fill="#c44a1b" />
+    </pattern>
+    <pattern id="eave" width="6" height="4" patternUnits="userSpaceOnUse">
+      <rect width="6" height="4" fill="#9e3418" /><circle cx="3" cy="2" r="1.7" fill="#f6b04e" />
+    </pattern>
+    <pattern id="paint" width="32" height="10" patternUnits="userSpaceOnUse">
+      <rect width="32" height="10" fill="#2f9a72" />
+      <rect x="1" width="2" height="10" fill="#f2c230" /><rect x="29" width="2" height="10" fill="#f2c230" />
+      <path d="M16 0.5 22 5 16 9.5 10 5Z" fill="#2a6fb5" stroke="#f2c230" />
+      <circle cx="16" cy="5" r="1.5" fill="#e0453a" />
+    </pattern>
+    <g id="wing">
+      <path d="M18 40H158L166 60H0Q8 50 18 40Z" fill="url(#tile)" />
+      <rect y="58" width="166" height="4" fill="url(#eave)" />
+      <path d="M2 14C8 28 18 34 34 34H158V41H30C14 41 4 32 2 14Z" fill="#d9531f" />
+      <path d="M10 20C13 27 18 31 24 33" fill="none" stroke="#2f9a72" stroke-width="2" stroke-linecap="round" />
+      <rect x="34" y="36" width="124" height="2" fill="#2f9a72" />
+      <circle cx="56" cy="32" r="2.5" fill="#2a6fb5" /><circle cx="80" cy="31.5" r="3" fill="#f2c230" />
+      <circle cx="104" cy="32" r="2.5" fill="#2f9a72" /><circle cx="128" cy="32" r="2.5" fill="#e0453a" />
+    </g>
+  </defs>
+
+  <rect y="60" width="480" height="20" fill="#c62d1f" />
+  <use href="#wing" />
+  <use href="#wing" transform="matrix(-1 0 0 1 480 0)" />
+
+  <!-- central hall -->
+  <path d="M146 26H334L362 50H118Z" fill="url(#tile)" />
+  <rect x="118" y="48" width="244" height="4" fill="url(#eave)" />
+  <path d="M116 0C126 14 140 18 160 18H320C340 18 354 14 364 0C362 14 352 25 336 27H144C128 25 118 14 116 0Z" fill="#d9531f" />
+  <rect x="160" y="21" width="160" height="2" fill="#2f9a72" /><rect x="160" y="23.5" width="160" height="1.5" fill="#2a6fb5" />
+  <path d="M172 16c5-6 10 3 15-2s10 3 15-2 9 2 14-2 6 0 9-2" fill="none" stroke="#f2c230" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M308 16c-5-6-10 3-15-2s-10 3-15-2-9 2-14-2-6 0-9-2" fill="none" stroke="#f2c230" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M240 0 242 4H238ZM235 4H245L247 9H233ZM234 9H246V18H234Z" fill="#f2c230" stroke="#b0151d" stroke-width="0.8" />
+  <circle cx="240" cy="13.5" r="1.8" fill="#e0453a" />
+
+  <!-- central bay with gold plaque, then the painted beam -->
+  <rect x="150" y="52" width="180" height="14" fill="#c62d1f" />
+  <rect x="212" y="53" width="56" height="11" fill="#b0151d" stroke="#f2c230" stroke-width="1.5" />
+  <rect y="66" width="480" height="10" fill="url(#paint)" />
+  <rect y="76" width="480" height="4" fill="#c62d1f" />
+</svg>

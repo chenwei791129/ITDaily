@@ -1,0 +1,27 @@
+/* 宮廟風: red beams under a swallowtail ridge, gold trim and 籤紙-yellow bands. */
+html[data-theme='temple'] {
+  --bg: #5c0b0e;
+  --surface: #fff8e7;
+  --band: #f7dc8a;
+  --text: #2b1a10;
+  --muted: #5a3a22;
+  --dim: #7a4a1e;
+  --faint: #7a5a3a;
+  --line: #ecd29a;
+  --rule: #c9a24a;
+  --accent: #b0151d;
+  --danger: #222;
+  --control-bg: #f2c230;
+  --control-fg: #7a0d12;
+  --font: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
+}
+/* The roof crowns the page and scrolls away; the red beam below it stays sticky with the controls. */
+html[data-theme='temple'] body::before {
+  content: ''; display: block; height: 80px; background: url('./temple-roof.svg') center / 100% 100%;
+}
+html[data-theme='temple'] .topbar { background: #c62d1f; }
+html[data-theme='temple'] .topbar h1 { color: #fff3d6; }
+html[data-theme='temple'] .theme:focus-within { outline-color: var(--control-bg); }
+html[data-theme='temple'] #today { color: var(--surface); }
+html[data-theme='temple'] h2 { background: var(--accent); color: #fff3d6; }
+html[data-theme='temple'] .day { font-weight: 700; text-shadow: 3px 3px 0 var(--control-bg); }
