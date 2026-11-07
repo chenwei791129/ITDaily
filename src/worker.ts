@@ -1,6 +1,6 @@
-import { getRecentNews } from './news'
+import { getRecentNews, type NewsEnv } from './news'
 
-interface Env {
+interface Env extends NewsEnv {
   ASSETS: { fetch(request: Request): Promise<Response> }
 }
 
@@ -10,7 +10,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url)
     if (pathname === '/healthz') return new Response('ok')
-    if (pathname === '/api/news') return Response.json(await getRecentNews())
+    if (pathname === '/api/news') return Response.json(await getRecentNews(env))
     return env.ASSETS.fetch(request)
   },
 }

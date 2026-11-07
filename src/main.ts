@@ -1,6 +1,6 @@
 import './style.css'
 import { getAlmanac } from './almanac'
-import type { NewsItem } from './news'
+import type { NewsLink } from './news'
 
 const $ = (id: string) => document.getElementById(id)!
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -10,7 +10,7 @@ let current = new Date()
 
 // News is the last 24 hours of the feed, independent of the date being viewed.
 async function loadNews() {
-  let news: NewsItem[] = []
+  let news: NewsLink[] = []
   let empty = '最近 24 小時沒有新消息'
   try {
     const res = await fetch('/api/news')

@@ -21,6 +21,10 @@ The same `dist/` and `/api/news` logic ship two ways:
   on the free plan. Static assets are served without running the Worker; only
   `/api/*` and `/healthz` invoke it. Try it locally with `bun run build && bunx wrangler dev`.
 
+`NEWS_SOURCES` and `NEWS_LIMIT` (see README) are read from `process.env` on the
+container (`make docker-run` picks up `.env`) and from `vars` in `wrangler.jsonc`
+on Workers. News sources live in `src/news/sources/`.
+
 Both are released by `.github/workflows/release-please.yml` when a release PR is
 merged; the Cloudflare job needs the `CLOUDFLARE_API_TOKEN` and
 `CLOUDFLARE_ACCOUNT_ID` repository secrets.

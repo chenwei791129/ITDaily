@@ -1,6 +1,7 @@
 import { resolve, sep } from 'node:path'
-import { getRecentNews } from './news'
+import { getRecentNews, parseConfig } from './news'
 
+parseConfig(process.env) // fail at startup on a bad NEWS_SOURCES / NEWS_LIMIT
 const root = resolve('dist')
 const port = Number(process.env.PORT ?? 8080)
 
@@ -9,7 +10,7 @@ const server = Bun.serve({
   async fetch(req) {
     const { pathname } = new URL(req.url)
     if (pathname === '/healthz') return new Response('ok')
-    if (pathname === '/api/news') return Response.json(await getRecentNews())
+    if (pathname === '/api/news') return Response.json(await getRecentNews(process.env))
 
     let decoded: string
     try {

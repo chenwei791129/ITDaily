@@ -11,7 +11,7 @@
 - **國曆與農曆日期**，以及每日一句 IT 運勢。
 - **IT 神方位、吉時、沖、煞**：依農民曆資料產生，對應方式見下節。
 - **宜／忌**：將當天農民曆的宜忌活動轉換為 IT 活動，例如「動土」對應「開新 repo」或「建新環境」、「開市」對應「正式上線」或「deploy production」。同一天所有人看到的內容都相同。
-- **IT 新消息**：最多顯示 3 則最近 24 小時內的 [iThome 資安新聞](https://www.ithome.com.tw/security)，點擊標題即可閱讀原文。
+- **IT 新消息**：合併所有啟用來源在最近 24 小時內的消息，依時間由新到舊顯示，預設最多 3 則 [iThome 資安新聞](https://www.ithome.com.tw/security)，點擊標題即可閱讀原文。來源與則數可自行設定，見[消息來源](#消息來源)。
 
 使用 ‹ › 瀏覽前後一天，或按左上角的日曆圖示直接選擇日期（1900～2100 年），按「回今天」返回當天。新聞一律顯示最新內容，不隨瀏覽的日期改變。
 
@@ -50,6 +50,35 @@ docker run --rm -p 8080:8080 ghcr.io/chenwei791129/it-daily:latest
 ```
 
 啟動後開啟 http://localhost:8080 。
+
+## 消息來源
+
+「IT 新消息」的內容來自一或多個消息來源。所有來源都內建在程式碼中，部署時以環境變數決定啟用哪些：
+
+| 環境變數 | 格式 | 未設定或空白時 |
+|---|---|---|
+| `NEWS_SOURCES` | 以逗號分隔的來源 id，例如 `ithome-security` | `ithome-security` |
+| `NEWS_LIMIT` | 正整數，最多顯示幾則 | `3` |
+
+設定錯誤（不存在的 id、非正整數）時，容器會啟動失敗；Cloudflare Workers 的 `/api/news` 會回傳 500。
+
+```sh
+docker run --rm -p 8080:8080 -e NEWS_LIMIT=5 ghcr.io/chenwei791129/it-daily:latest
+```
+
+內建來源：
+
+| id | 內容 |
+|---|---|
+| `ithome-security` | [iThome 資安新聞](https://www.ithome.com.tw/security) |
+
+### 新增來源
+
+1. 參考 [`src/news/sources/ithome.ts`](src/news/sources/ithome.ts) 新增一個檔案，實作 [`NewsSource`](src/news/source.ts)：給一個唯一的 kebab-case `id`，在 `fetch(signal)` 中抓取並回傳 `{ title, link, published }` 的清單；抓取失敗或沒有資料時請丟出錯誤，核心才會沿用上一次的內容。RSS 類來源可以重用 [`src/news/rss.ts`](src/news/rss.ts)。
+2. 在 [`src/news/sources/index.ts`](src/news/sources/index.ts) 的 `SOURCES` 加入它。
+3. 部署時以 `NEWS_SOURCES` 啟用；若希望預設就啟用，也加進 `DEFAULT_SOURCES`。
+
+24 小時的時間範圍、排序、則數上限、30 分鐘快取與連結檢查由核心統一處理，來源不必自己做；一個來源抓取失敗時會沿用它上一次的內容，不影響其他來源。設計考量見 [ADR 0001](docs/adr/0001-news-sources-built-in-selected-by-config.md)。
 
 ## 開發
 
