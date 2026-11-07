@@ -3,12 +3,23 @@
   --danger: #c00;
   --bg: #f7f7f7;
   --band: #e4e4e4;
-  font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-  color: #222;
+  --surface: #fff;
+  --text: #222;
+  --muted: #444;
+  --dim: #666;
+  --faint: #767676;
+  --line: #ddd;
+  --rule: #999;
+  --control-bg: #666;
+  --control-fg: #fff;
+  --radius: 999px;
+  --font: -apple-system, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  font-family: var(--font);
+  color: var(--text);
   background: var(--bg);
 }
 
-body { margin: 0 auto; max-width: 480px; background: #fff; min-height: 100vh; }
+body { margin: 0 auto; max-width: 480px; background: var(--surface); min-height: 100vh; }
 .accent { color: var(--accent); }
 .danger { color: var(--danger); }
 
@@ -19,7 +30,7 @@ body { margin: 0 auto; max-width: 480px; background: #fff; min-height: 100vh; }
 }
 .topbar h1 { font-size: 1.15rem; margin: 0; }
 .topbar button, #today {
-  border: 0; border-radius: 999px; background: #666; color: #fff; cursor: pointer;
+  border: 0; border-radius: var(--radius); background: var(--control-bg); color: var(--control-fg); cursor: pointer;
 }
 .topbar button { width: 40px; height: 40px; font-size: 1.6rem; line-height: 1; }
 .topbar-left { display: flex; gap: 8px; }
@@ -36,26 +47,27 @@ body { margin: 0 auto; max-width: 480px; background: #fff; min-height: 100vh; }
 .date-head b { font-size: 2rem; font-weight: 400; }
 #weekday { font-size: 2rem; }
 .day { font-size: 7rem; line-height: 1.1; font-weight: 300; }
-.lunar { color: #444; }
+.lunar { color: var(--muted); }
 
 .fortune { display: flex; align-items: center; gap: 12px; padding: 12px 24px; font-size: 1.15rem; }
+.fortune svg { color: var(--dim); }
 .fortune p { margin: 0; }
 
 .info { background: var(--band); margin: 0; padding: 4px 12px; font-size: 1.1rem; }
-.info div { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px dashed #999; }
+.info div { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--rule); }
 .info dt { flex: none; }
 .info dd { margin: 0; }
 #direction { word-break: keep-all; }
 
 h2 { font-size: 1rem; margin: 0; padding: 10px 16px; background: var(--band); }
 .yiji { list-style: none; margin: 0; padding: 0; }
-.yiji li { display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #ddd; line-height: 1.6; font-size: 1.1rem; }
+.yiji li { display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); line-height: 1.6; font-size: 1.1rem; }
 .badge {
   flex: none; display: inline-grid; place-items: center; width: 1.8em; height: 1.8em;
   border: 2px solid currentColor; border-radius: 50%;
 }
 .badge.yi { color: var(--accent); }
 .badge.ji { color: var(--danger); }
-.placeholder { margin: 0; padding: 14px 16px; color: #767676; }
+.placeholder { margin: 0; padding: 14px 16px; color: var(--faint); }
 .news { list-style: none; margin: 0; padding: 0; }
-.news a { display: block; padding: 12px 16px; border-bottom: 1px solid #ddd; color: inherit; line-height: 1.5; }
+.news a { display: block; padding: 12px 16px; border-bottom: 1px solid var(--line); color: inherit; line-height: 1.5; }
