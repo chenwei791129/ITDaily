@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0](https://github.com/chenwei791129/ITDaily/compare/v1.1.0...v1.2.0) (2026-11-07)
+
+
+### Features
+
+* keep the viewed date in the URL so it can be shared ([1e5bd2f](https://github.com/chenwei791129/ITDaily/commit/1e5bd2fd426d38b925ac1de960d1fac38c3baa42))
+* pick the daily fortune from a set per 建除十二神 ([bb6985a](https://github.com/chenwei791129/ITDaily/commit/bb6985a858a0c075b7eba0be8aefaeaff0b9bbd1))
+* remove the empty daily memo section ([15c1fca](https://github.com/chenwei791129/ITDaily/commit/15c1fcaa20f757f35227c53ce23b467cd9f3693f))
+
 ## [1.1.0](https://github.com/chenwei791129/ITDaily/compare/v1.0.0...v1.1.0) (2026-11-05)
 
 
