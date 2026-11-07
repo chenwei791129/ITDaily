@@ -1,11 +1,16 @@
 import { expect, test } from 'bun:test'
 import { LunarUtil } from 'lunar-typescript'
-import { getAlmanac } from './almanac'
+import { getAlmanac, ZHI_XING_FORTUNE } from './almanac'
 import { NONE, YI_JI_IT } from './yiji'
 
 test('every traditional yi/ji term has an IT mapping', () => {
   const missing = LunarUtil.YI_JI.filter((term) => term !== NONE && !YI_JI_IT[term])
   expect(missing).toEqual([])
+})
+
+test('every 建除十二神 has multiple fortunes', () => {
+  expect(Object.keys(ZHI_XING_FORTUNE)).toEqual(LunarUtil.ZHI_XING.slice(1))
+  for (const fortunes of Object.values(ZHI_XING_FORTUNE)) expect(fortunes.length).toBeGreaterThan(1)
 })
 
 test('same date gives identical almanac', () => {
