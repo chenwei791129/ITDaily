@@ -2,6 +2,7 @@ import './style.css'
 import './themes/handwriting.css'
 import './themes/tech.css'
 import './themes/retro.css'
+import './themes/kuaikuai.css'
 import { getAlmanac } from './almanac'
 import type { NewsLink } from './news'
 

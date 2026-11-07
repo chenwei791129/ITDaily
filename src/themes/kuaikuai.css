@@ -1,0 +1,36 @@
+/* 乖乖風: the lime-green snack bag, a white label card with dotted lines and sticker lettering. */
+html[data-theme='kuaikuai'] {
+  --bg: #8dc63f;
+  --surface: #fff;
+  --band: #e8f5d6;
+  --text: #1f2d16;
+  --muted: #3c5a2a;
+  --dim: #5b8c2a;
+  --faint: #55704a;
+  --line: #cfe6b0;
+  --rule: #8dc63f;
+  --accent: #2a7230;
+  --danger: #d7191f;
+  --control-bg: #fff;
+  --control-fg: #3f7a17;
+  --font: 'Huninn', 'Arial Rounded MT Bold', 'PingFang TC', sans-serif;
+}
+html[data-theme='kuaikuai'] .topbar { background: var(--bg); z-index: 1; }
+/* The bag's crimped top seal hangs below the bar. */
+html[data-theme='kuaikuai'] .topbar::after {
+  content: ''; position: absolute; inset: 100% 0 auto; height: 6px;
+  background: linear-gradient(135deg, var(--bg) 50%, transparent 50%) 0 0 / 12px 6px repeat-x,
+    linear-gradient(225deg, var(--bg) 50%, transparent 50%) 0 0 / 12px 6px repeat-x;
+}
+/* Sticker lettering like the bag's 造句包: pale yellow, thick dark outline, offset drop shadow. */
+html[data-theme='kuaikuai'] .topbar h1 {
+  font-size: 1.6rem; letter-spacing: 2px; color: #fff3a6;
+  text-shadow: 3px 0 #2b1a0e, -3px 0 #2b1a0e, 0 3px #2b1a0e, 0 -3px #2b1a0e,
+    2px 2px #2b1a0e, -2px -2px #2b1a0e, 2px -2px #2b1a0e, -2px 2px #2b1a0e, 4px 5px #2b1a0e;
+}
+html[data-theme='kuaikuai'] .theme:focus-within { outline-color: var(--text); }
+html[data-theme='kuaikuai'] #today { color: #fff; }
+html[data-theme='kuaikuai'] .date { padding-top: 22px; }
+html[data-theme='kuaikuai'] .day { text-shadow: 3px 3px 0 var(--line); }
+html[data-theme='kuaikuai'] :is(.info div, .yiji li, .news a) { border-bottom: 2px dotted var(--rule); }
+html[data-theme='kuaikuai'] h2::before { content: '●●● '; content: '●●● ' / ''; color: var(--bg); letter-spacing: 2px; }
