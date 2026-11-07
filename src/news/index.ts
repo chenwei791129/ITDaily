@@ -41,12 +41,15 @@ export function parseConfig(env: NewsEnv, registry = SOURCES): NewsConfig {
 const isSafeLink = (link: string) => /^https?:\/\//i.test(link) && !/[\s<>|"]/.test(link)
 
 export function pickRecent(items: NewsItem[], now: Date, limit: number): NewsLink[] {
+  const seen = new Set<string>()
   return items
     .filter((i) => {
       const age = now.getTime() - i.published
       return i.title && isSafeLink(i.link) && age >= -CLOCK_SKEW_MS && age < WINDOW_MS
     })
     .sort((a, b) => b.published - a.published)
+    // The same article can appear in several enabled sources (e.g. two channels of one site).
+    .filter((i) => !seen.has(i.link) && seen.add(i.link))
     .slice(0, limit)
     .map(({ title, link }) => ({ title, link }))
 }

@@ -61,6 +61,8 @@ test('pickRecent: 24-hour window with clock skew, newest first, limit and link c
   expect(titles('2026-10-30T18:40')).toEqual(['晚上', '早上', '昨天']) // 4 minutes ahead: within skew
   expect(titles('2026-10-31T18:40')).toEqual(['晚上'])
   expect(titles('2026-10-31T18:44')).toEqual([])
+  // Same link from two sources counts once, so it does not use up the limit.
+  expect(pickRecent([...items, news('晚上', '2026-10-30T18:40')], tw('2026-10-30T21:00'), 3).map((n) => n.title)).toEqual(['晚上', '早上', '昨天'])
   expect(pickRecent(items, tw('2026-10-30T21:00'), 3)[0]).toEqual({ title: '晚上', link: 'https://example.com/%E6%99%9A%E4%B8%8A' })
 })
 

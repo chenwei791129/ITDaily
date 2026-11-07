@@ -23,7 +23,11 @@ The same `dist/` and `/api/news` logic ship two ways:
 
 `NEWS_SOURCES` and `NEWS_LIMIT` (see README) are read from `process.env` on the
 container (`make docker-run` picks up `.env`) and from `vars` in `wrangler.jsonc`
-on Workers. News sources live in `src/news/sources/`.
+on Workers. News sources live in `src/news/sources/<site>/` (one directory per
+site, registered in `src/news/sources/index.ts`); the iThome channels share one
+factory in `ithome/index.ts`, and the default stays `ithome-security`. Try another source
+locally with `NEWS_SOURCES=ithome-ai bun run start` or
+`bunx wrangler dev --var NEWS_SOURCES:ithome-ai`.
 
 Both are released by `.github/workflows/release-please.yml` when a release PR is
 merged; the Cloudflare job needs the `CLOUDFLARE_API_TOKEN` and

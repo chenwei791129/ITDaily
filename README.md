@@ -11,7 +11,7 @@
 - **國曆與農曆日期**，以及每日一句 IT 運勢。
 - **IT 神方位、吉時、沖、煞**：依農民曆資料產生，對應方式見下節。
 - **宜／忌**：將當天農民曆的宜忌活動轉換為 IT 活動，例如「動土」對應「開新 repo」或「建新環境」、「開市」對應「正式上線」或「deploy production」。同一天所有人看到的內容都相同。
-- **IT 新消息**：合併所有啟用來源在最近 24 小時內的消息，依時間由新到舊顯示，預設最多 3 則 [iThome 資安新聞](https://www.ithome.com.tw/security)，點擊標題即可閱讀原文。來源與則數可自行設定，見[消息來源](#消息來源)。
+- **IT 新消息**：合併所有啟用來源在最近 24 小時內的消息，依時間由新到舊顯示，預設最多 3 則 [iThome 資安頻道](https://www.ithome.com.tw/security)，點擊標題即可閱讀原文。來源與則數可自行設定，見[消息來源](#消息來源)。
 
 使用 ‹ › 瀏覽前後一天，或按左上角的日曆圖示直接選擇日期（1900～2100 年），按「回今天」返回當天。新聞一律顯示最新內容，不隨瀏覽的日期改變。
 
@@ -57,28 +57,39 @@ docker run --rm -p 8080:8080 ghcr.io/chenwei791129/it-daily:latest
 
 | 環境變數 | 格式 | 未設定或空白時 |
 |---|---|---|
-| `NEWS_SOURCES` | 以逗號分隔的來源 id，例如 `ithome-security` | `ithome-security` |
+| `NEWS_SOURCES` | 以逗號分隔的來源 id，例如 `ithome-security,ithome-ai` | `ithome-security` |
 | `NEWS_LIMIT` | 正整數，最多顯示幾則 | `3` |
 
 設定錯誤（不存在的 id、非正整數）時，容器會啟動失敗；Cloudflare Workers 的 `/api/news` 會回傳 500。
 
 ```sh
-docker run --rm -p 8080:8080 -e NEWS_LIMIT=5 ghcr.io/chenwei791129/it-daily:latest
+docker run --rm -p 8080:8080 -e NEWS_SOURCES=ithome-security,ithome-ai -e NEWS_LIMIT=5 ghcr.io/chenwei791129/it-daily:latest
 ```
 
 內建來源：
 
 | id | 內容 |
 |---|---|
-| `ithome-security` | [iThome 資安新聞](https://www.ithome.com.tw/security) |
+| `ithome-security` | [iThome 資安頻道](https://www.ithome.com.tw/security)（預設） |
+| `ithome-news` | [iThome 全站最新新聞](https://www.ithome.com.tw/latest) |
+| `ithome-ai` | [iThome AI 頻道](https://www.ithome.com.tw/ai) |
+| `ithome-cloud` | [iThome Cloud 頻道](https://www.ithome.com.tw/cloud) |
+| `ithome-devops` | [iThome DevOps 頻道](https://www.ithome.com.tw/devops) |
+| `ithome-tech` | [iThome 技術頻道](https://www.ithome.com.tw/tech) |
+| `ithome-cio` | [iThome CIO 頻道](https://www.ithome.com.tw/cio) |
+| `ithome-buying` | [iThome 產品評測頻道](https://www.ithome.com.tw/buying) |
+
+[iThome RSS 列表](https://www.ithome.com.tw/rss-list)中的「全部」（`/rss`）與「專欄」（`/rss/voice`）發布時間格式有誤，無法判斷是否在 24 小時內，因此未收錄；全站消息請用 `ithome-news`。
+
+只顯示最近 24 小時的消息，更新較慢的頻道（如 DevOps、技術、CIO、產品評測）可能常常沒有內容，適合和其他來源一起啟用。同一篇文章出現在多個已啟用的來源時，只會顯示一次。
 
 ### 新增來源
 
-1. 參考 [`src/news/sources/ithome.ts`](src/news/sources/ithome.ts) 新增一個檔案，實作 [`NewsSource`](src/news/source.ts)：給一個唯一的 kebab-case `id`，在 `fetch(signal)` 中抓取並回傳 `{ title, link, published }` 的清單；抓取失敗或沒有資料時請丟出錯誤，核心才會沿用上一次的內容。RSS 類來源可以重用 [`src/news/rss.ts`](src/news/rss.ts)。
-2. 在 [`src/news/sources/index.ts`](src/news/sources/index.ts) 的 `SOURCES` 加入它。
+1. 每個網站一個目錄：參考 [`src/news/sources/ithome/`](src/news/sources/ithome/) 新增 `src/news/sources/<網站>/index.ts`（測試放在同一目錄），匯出一個 [`NewsSource`](src/news/source.ts) 陣列，一個網站可以提供多個來源。每個來源要有唯一、以目錄名稱為前綴的 kebab-case `id`（例如 `ithome-ai`），在 `fetch(signal)` 中抓取並回傳 `{ title, link, published }` 的清單；抓取失敗或沒有資料時請丟出錯誤，核心才會沿用上一次的內容。RSS 類來源可以重用 [`src/news/rss.ts`](src/news/rss.ts)。
+2. 在 [`src/news/sources/index.ts`](src/news/sources/index.ts) 的 `SOURCES` 展開加入該陣列；`bun test` 會檢查 id 是否重複、格式是否正確。並在上方「內建來源」表格列出新的 id。
 3. 部署時以 `NEWS_SOURCES` 啟用；若希望預設就啟用，也加進 `DEFAULT_SOURCES`。
 
-24 小時的時間範圍、排序、則數上限、30 分鐘快取與連結檢查由核心統一處理，來源不必自己做；一個來源抓取失敗時會沿用它上一次的內容，不影響其他來源。設計考量見 [ADR 0001](docs/adr/0001-news-sources-built-in-selected-by-config.md)。
+24 小時的時間範圍、排序、去除重複、則數上限、30 分鐘快取與連結檢查由核心統一處理，來源不必自己做；一個來源抓取失敗時會沿用它上一次的內容，不影響其他來源。設計考量見 [ADR 0001](docs/adr/0001-news-sources-built-in-selected-by-config.md)。
 
 ## 開發
 

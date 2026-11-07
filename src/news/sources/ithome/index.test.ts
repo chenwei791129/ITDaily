@@ -1,5 +1,8 @@
 import { expect, spyOn, test } from 'bun:test'
-import { ithomeSecurity, parseFeed } from './ithome'
+import { ithomeSources, parseFeed } from '.'
+
+const ithomeSecurity = ithomeSources[0]
+const CHANNELS = ['security', 'news', 'ai', 'cloud', 'devops', 'tech', 'cio', 'buying']
 
 const tw = (s: string) => new Date(`${s}+08:00`)
 
@@ -39,8 +42,18 @@ test('fetch throws on HTTP errors and empty feeds', async () => {
     expect(await ithomeSecurity.fetch(signal)).toHaveLength(5)
     expect(fetchSpy.mock.calls[0][1]?.signal).toBe(signal)
 
+    // Each id fetches its own channel feed.
+    for (const s of ithomeSources) {
+      fetchSpy.mockResolvedValue(new Response(FEED)) // a body can only be read once
+      await s.fetch(signal)
+    }
+    expect(fetchSpy.mock.calls.slice(1).map(([url]) => [url])).toEqual(
+      CHANNELS.map((ch) => [`https://www.ithome.com.tw/rss/${ch}`]),
+    )
+    expect(ithomeSources.map((s) => s.id)).toEqual(CHANNELS.map((ch) => `ithome-${ch}`))
+
     fetchSpy.mockResolvedValue(new Response('oops', { status: 503 }))
-    await expect(ithomeSecurity.fetch(signal)).rejects.toThrow('503')
+    await expect(ithomeSecurity.fetch(signal)).rejects.toThrow('rss/security responded 503')
 
     fetchSpy.mockResolvedValue(new Response('<rss><channel></channel></rss>'))
     await expect(ithomeSecurity.fetch(signal)).rejects.toThrow('no items')
