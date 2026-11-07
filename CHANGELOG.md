@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/chenwei791129/ITDaily/compare/v1.2.0...v1.3.0) (2026-11-07)
+
+
+### Features
+
+* add iThome channel sources in a per-site directory and dedupe merged news ([25834ac](https://github.com/chenwei791129/ITDaily/commit/25834ac1be6ad55bae632ffa566a30b73f70d710))
+* make news sources pluggable and selectable via env ([828b5f0](https://github.com/chenwei791129/ITDaily/commit/828b5f0b6152db7bdd066c5b7a450f25292e601b))
+
 ## [1.2.0](https://github.com/chenwei791129/ITDaily/compare/v1.1.0...v1.2.0) (2026-11-07)
 
 
