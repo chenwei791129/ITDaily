@@ -1,0 +1,20 @@
+/* 手寫風: ink on paper, Kai script and wobbly hand-drawn corners. */
+html[data-theme='handwriting'] {
+  --bg: #efe9dc;
+  --surface: #fbf8f1;
+  --band: #f1ead8;
+  --text: #2b2b2b;
+  --muted: #4a4a4a;
+  --dim: #555;
+  --faint: #6b6559;
+  --line: #d6cbb4;
+  --rule: #a99c82;
+  --accent: #1f4e9c;
+  --danger: #b8322a;
+  --control-bg: #2b2b2b;
+  --control-fg: #fbf8f1;
+  --radius: 20px 8px 18px 10px / 10px 18px 8px 20px;
+  --font: 'LXGW WenKai TC', 'Kaiti TC', 'BiauKai', 'DFKai-SB', cursive;
+}
+html[data-theme='handwriting'] :is(.yiji li, .news a) { border-bottom-style: dashed; }
+html[data-theme='handwriting'] .badge { border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%; }

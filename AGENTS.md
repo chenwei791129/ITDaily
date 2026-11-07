@@ -12,6 +12,16 @@ bun run build    # outputs dist/
 bun run start    # serves dist/ and /api on :8080
 ```
 
+## Themes
+
+The default theme is plain `src/style.css`; colours, font and corner radius are
+CSS custom properties on `:root`. A theme is `src/themes/<id>.css` overriding
+those properties under `html[data-theme='<id>']` (plus a few decorative rules),
+imported in `src/main.ts`, listed as an `<option value="<id>">` of `#theme`
+in `index.html`, and named in README's usage paragraph. Add `data-font="<Google Fonts family>"` to the option when the
+theme needs a web font; it is loaded only once that theme is chosen. The choice
+is kept in `localStorage.theme`, so treat theme ids as stable.
+
 ## Deployment
 
 The same `dist/` and `/api/news` logic ship two ways:

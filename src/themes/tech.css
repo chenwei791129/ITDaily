@@ -1,0 +1,22 @@
+/* 科技風: dark terminal, neon accents and monospace type. */
+html[data-theme='tech'] {
+  color-scheme: dark;
+  --bg: #05080c;
+  --surface: #0b0f14;
+  --band: #111820;
+  --text: #d6e2ee;
+  --muted: #a3b3c4;
+  --dim: #8697a9;
+  --faint: #8697a9;
+  --line: #1f2a36;
+  --rule: #2f3e4f;
+  --accent: #22d3ee;
+  --danger: #fb7185;
+  --control-bg: #1b2632;
+  --control-fg: #22d3ee;
+  --radius: 4px;
+  --font: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+html[data-theme='tech'] #today { color: var(--surface); }
+html[data-theme='tech'] .day { text-shadow: 0 0 16px rgb(34 211 238 / 0.45); }
+html[data-theme='tech'] h2::before { content: '> '; content: '> ' / ''; color: var(--accent); }

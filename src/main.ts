@@ -1,4 +1,7 @@
 import './style.css'
+import './themes/handwriting.css'
+import './themes/tech.css'
+import './themes/retro.css'
 import { getAlmanac } from './almanac'
 import type { NewsLink } from './news'
 
@@ -79,6 +82,30 @@ $('today').addEventListener('click', () => {
   render()
   $('prev').focus() // the button just hid itself; keep keyboard focus on the page
 })
+
+const theme = $('theme') as HTMLSelectElement
+function applyTheme() {
+  const root = document.documentElement
+  if (theme.value) root.dataset.theme = theme.value
+  else delete root.dataset.theme
+  // Web fonts are fetched only for themes that need one, so the default theme stays request-free.
+  const font = theme.selectedOptions[0].dataset.font
+  const href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`
+  if (font && !document.querySelector(`link[href="${href}"]`)) {
+    document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href }))
+  }
+}
+theme.addEventListener('change', () => {
+  applyTheme()
+  try { localStorage.theme = theme.value } catch {} // storage blocked: the choice lasts this visit only
+})
+try {
+  theme.value = localStorage.theme ?? ''
+} catch {
+  // storage blocked: start on the default theme
+}
+theme.selectedIndex = Math.max(theme.selectedIndex, 0) // unknown saved theme falls back to the default
+applyTheme()
 
 pick.value = new URLSearchParams(location.search).get('date') ?? ''
 current = pickedDate() ?? current

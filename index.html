@@ -6,6 +6,10 @@
     <title>IT人的今天</title>
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Apply the saved theme before first paint; main.ts validates it against #theme. -->
+    <script>
+      try { if (localStorage.theme) document.documentElement.dataset.theme = localStorage.theme } catch {}
+    </script>
   </head>
   <body>
     <header class="topbar">
@@ -22,7 +26,22 @@
         </span>
       </div>
       <h1>IT人的今天</h1>
-      <button id="next" type="button" aria-label="後一天">›</button>
+      <div class="topbar-right">
+        <span class="theme">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a9 9 0 0 0 0 18c1 0 1.6-.7 1.6-1.6 0-1.1-1-1.4-1-2.4 0-.9.7-1.5 1.6-1.5H16a5 5 0 0 0 5-5c0-4.1-4-7.5-9-7.5z" />
+            <circle cx="7.5" cy="11" r="1" /><circle cx="10" cy="7" r="1" /><circle cx="15" cy="7.5" r="1" />
+          </svg>
+          <!-- data-font: Google Fonts family, loaded only when that theme is chosen. -->
+          <select id="theme" aria-label="主題">
+            <option value="">預設</option>
+            <option value="handwriting" data-font="LXGW+WenKai+TC:wght@400;700">手寫風</option>
+            <option value="tech">科技風</option>
+            <option value="retro" data-font="Noto+Serif+TC:wght@400;700">復古風</option>
+          </select>
+        </span>
+        <button id="next" type="button" aria-label="後一天">›</button>
+      </div>
     </header>
 
     <main>

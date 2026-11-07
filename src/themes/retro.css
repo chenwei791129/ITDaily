@@ -1,0 +1,19 @@
+/* 復古風: printed almanac on parchment, serif type and double rules. */
+html[data-theme='retro'] {
+  --bg: #e6d8b8;
+  --surface: #f6edd8;
+  --band: #eadcb9;
+  --text: #3b2a1a;
+  --muted: #5a4632;
+  --dim: #6b5640;
+  --faint: #6e5a44;
+  --line: #d6c39c;
+  --rule: #a88e66;
+  --accent: #2c4a7a;
+  --danger: #a8322d;
+  --control-bg: #6b4f33;
+  --control-fg: #f6edd8;
+  --font: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
+}
+html[data-theme='retro'] h2 { border-block: 3px double var(--rule); }
+html[data-theme='retro'] .day { font-weight: 400; }
