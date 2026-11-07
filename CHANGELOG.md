@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/chenwei791129/ITDaily/compare/v1.4.0...v1.5.0) (2026-11-07)
+
+
+### Features
+
+* add 乖乖風 theme ([6d08152](https://github.com/chenwei791129/ITDaily/commit/6d08152a5b572b50cab6f5734ad62d1b1c08ee84))
+* add 宮廟風 theme ([0e1e92b](https://github.com/chenwei791129/ITDaily/commit/0e1e92bc52c8c32ab9547d607a92f301e3ea09ef))
+
 ## [1.4.0](https://github.com/chenwei791129/ITDaily/compare/v1.3.0...v1.4.0) (2026-11-07)
 
 
