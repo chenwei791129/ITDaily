@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/chenwei791129/ITDaily/compare/v1.5.0...v1.6.0) (2026-11-21)
+
+
+### Features
+
+* add footer linking to the GitHub repo ([35991de](https://github.com/chenwei791129/ITDaily/commit/35991de29f98deed901cdf71d2efd351edf2c2be))
+
 ## [1.5.0](https://github.com/chenwei791129/ITDaily/compare/v1.4.0...v1.5.0) (2026-11-07)
 
 
